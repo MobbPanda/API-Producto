@@ -9,7 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(24)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -30,7 +30,7 @@ dependencies {
 	//implementation 'mysql:mysql-connector-java'
 
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'org.postgresql:postgresql'
 	//new
 	//implementation 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'

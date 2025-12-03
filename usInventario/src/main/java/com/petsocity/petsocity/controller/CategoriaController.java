@@ -17,65 +17,87 @@ import org.springframework.web.bind.annotation.RestController;
 import com.petsocity.petsocity.model.Categoria;
 import com.petsocity.petsocity.service.CategoriaService;
 
-
-
 @RestController
 @RequestMapping("/api/v1/categorias")
 public class CategoriaController {
-private final CategoriaService categoriaService;
+
+    private final CategoriaService categoriaService;
 
     public CategoriaController(CategoriaService categoriaService) {
         this.categoriaService = categoriaService;
     }
 
-    // Leer todo
+    // Obtener todas las categorias
     @GetMapping("")
     public List<Categoria> listarCategorias() {
         return categoriaService.obtenerTodas();
     }
 
-    // Leer por id
+    // Obtener categoria por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria> obtenerPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Categoria> obtenerPorId(@PathVariable("id") Integer id) {
         return categoriaService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    
-    // crear
-    @PostMapping("")
-    public Categoria crearCategoria(@RequestBody Categoria categoria) {
-        return categoriaService.crearCategoria(categoria);
-    }
 
-    // actualizar
-    @PutMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> actualizarCategoria(@PathVariable("id") Long id, @RequestBody Categoria categoria) {
+    // Crear nueva categoria
+    @PostMapping("")
+    public ResponseEntity<?> crearCategoria(@RequestBody Categoria categoria) {
         Map<String, Object> response = new HashMap<>();
 
         if (categoria.getNombre() == null || categoria.getNombre().trim().isEmpty()) {
             response.put("error", "El nombre es obligatorio.");
             return ResponseEntity.badRequest().body(response);
         }
-        Categoria categoriaActualizada = categoriaService.actualizarCategoria(id, categoria);
 
-        response.put("mensaje", "Categoría actualizada correctamente.");
-        response.put("categoria", categoriaActualizada);
-
-        return ResponseEntity.ok(response);
+        try {
+            Categoria creada = categoriaService.crearCategoria(categoria);
+            response.put("mensaje", "Categoría creada correctamente.");
+            response.put("categoria", creada);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
-    // eliminar
+    // Actualizar categoria
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> actualizarCategoria(
+            @PathVariable("id") Integer id,
+            @RequestBody Categoria categoria) {
+
+        Map<String, Object> response = new HashMap<>();
+
+        if (categoria.getNombre() == null || categoria.getNombre().trim().isEmpty()) {
+            response.put("error", "El nombre es obligatorio.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        try {
+            Categoria categoriaActualizada = categoriaService.actualizarCategoria(id, categoria);
+            response.put("mensaje", "Categoría actualizada correctamente.");
+            response.put("categoria", categoriaActualizada);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Eliminar categoria
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> eliminarCategoria(@PathVariable("id") Long id) {
+    public ResponseEntity<Map<String, String>> eliminarCategoria(@PathVariable("id") Integer id) {
         Map<String, String> response = new HashMap<>();
-        categoriaService.eliminarCategoria(id);
-        response.put("mensaje", "Categoria eliminado correctamente");
-        return ResponseEntity.ok(response);
+        try {
+            categoriaService.eliminarCategoria(id);
+            response.put("mensaje", "Categoría eliminada correctamente");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            response.put("error", e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    /*¿Qué hace?
-    Llama al servicio para eliminar la categoría con el id que llega en la URL.
-    Luego crea un Map con un mensaje personalizado.
-    Devuelve ese mensaje como respuesta (en formato JSON) al cliente.*/
 }
