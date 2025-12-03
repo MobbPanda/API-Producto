@@ -25,6 +25,6 @@ public interface InventarioRepository extends JpaRepository<Inventario, Integer>
     List<Inventario> buscarPorCategoria(@Param("categoriaId") Integer categoriaId);
 
     // Obtener inventario por ID del producto (1:1)
-    Optional<Inventario> findByProductoId(Integer idProducto);
-    
+    @Query("SELECT i FROM Inventario i WHERE i.producto.idProducto = :idProducto")
+    Optional<Inventario> findByProductoId(@Param("idProducto") Integer idProducto);
 }
