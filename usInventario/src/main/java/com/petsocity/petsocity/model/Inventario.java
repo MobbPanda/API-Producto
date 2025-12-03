@@ -1,6 +1,5 @@
 package com.petsocity.petsocity.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -9,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -19,6 +17,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Table(name = "inventario")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Inventario {
 
     @Id
@@ -40,45 +40,4 @@ public class Inventario {
     @Column(name = "fecha_actualizacion", nullable = false)
     private LocalDateTime fechaActualizacion = LocalDateTime.now();
 
-    // Getters y setters
-
-    public Integer getIdInventario() {
-        return idInventario;
-    }
-
-    public void setIdInventario(Integer idInventario) {
-        this.idInventario = idInventario;
-    }
-
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
-    public Integer getStockActual() {
-        return stockActual;
-    }
-
-    public void setStockActual(Integer stockActual) {
-        this.stockActual = stockActual;
-    }
-
-    public Integer getStockMinimo() {
-        return stockMinimo;
-    }
-
-    public void setStockMinimo(Integer stockMinimo) {
-        this.stockMinimo = stockMinimo;
-    }
-
-    public LocalDateTime getFechaActualizacion() {
-        return fechaActualizacion;
-    }
-
-    public void setFechaActualizacion(LocalDateTime fechaActualizacion) {
-        this.fechaActualizacion = fechaActualizacion;
-    }
 }
