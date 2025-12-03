@@ -43,7 +43,7 @@ public class ProductoService {
     public List<Producto> buscarPorCategoria(Integer idCategoria) {
 
         // Valida que la categoria exista
-        Categoria categoria = categoriaRepository.findById(idCategoria)
+        categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + idCategoria));
 
         return productoRepository.buscarPorCategoria(idCategoria);
