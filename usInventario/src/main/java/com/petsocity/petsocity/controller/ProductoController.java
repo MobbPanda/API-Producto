@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.petsocity.petsocity.model.Producto;
 import com.petsocity.petsocity.service.ProductoService;
 
+@RestController
+@RequestMapping("/api/v1/productos")
 public class ProductoController {
 
     private final ProductoService productoService;

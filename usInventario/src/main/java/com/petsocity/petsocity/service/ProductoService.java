@@ -43,7 +43,7 @@ public class ProductoService {
     public List<Producto> buscarPorCategoria(Integer idCategoria) {
 
         // Valida que la categoria exista
-        Categoria categoria = categoriaRepository.findById(idCategoria)
+        categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + idCategoria));
 
         return productoRepository.buscarPorCategoria(idCategoria);
@@ -99,6 +99,11 @@ public class ProductoService {
         // Estado (activo o inactivo)
         if (datos.getActivo() != null) {
             existente.setActivo(datos.getActivo());
+        }
+
+        // Imagen Url
+        if (datos.getImagenUrl() != null) {
+        existente.setImagenUrl(datos.getImagenUrl());
         }
 
         // Categoria
