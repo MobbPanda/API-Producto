@@ -101,6 +101,11 @@ public class ProductoService {
             existente.setActivo(datos.getActivo());
         }
 
+        // Imagen Url
+        if (datos.getImagenUrl() != null) {
+        existente.setImagenUrl(datos.getImagenUrl());
+        }
+
         // Categoria
         if (datos.getCategoria() != null && datos.getCategoria().getIdCategoria() != null) {
 
