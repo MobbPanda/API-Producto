@@ -43,4 +43,6 @@ public class Producto {
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
 
+    @Column(name = "imagen_url", length = 300)
+    private String imagenUrl;
 }   
