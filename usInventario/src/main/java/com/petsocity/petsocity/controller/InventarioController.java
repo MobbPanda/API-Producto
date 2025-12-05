@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.petsocity.petsocity.model.Inventario;
 import com.petsocity.petsocity.service.InventarioService;
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/inventarios")
 public class InventarioController {
